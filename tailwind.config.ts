@@ -7,12 +7,16 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Space Grotesk', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,6 +61,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gold: {
+          DEFAULT: "hsl(43, 96%, 56%)",
+          light: "hsl(43, 96%, 70%)",
+          dark: "hsl(35, 100%, 45%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,25 +74,37 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
+        "slide-up": {
+          from: { transform: "translateY(100%)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "slide-up": "slide-up 0.5s ease-out",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-gold": "linear-gradient(135deg, hsl(43, 96%, 56%) 0%, hsl(35, 100%, 45%) 100%)",
+        "gradient-dark": "linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 10%) 100%)",
+      },
+      boxShadow: {
+        "glow": "0 0 40px hsl(43, 96%, 56%, 0.3)",
+        "glow-lg": "0 0 60px hsl(43, 96%, 56%, 0.4)",
+        "poster": "0 12px 40px hsl(0, 0%, 0%, 0.6)",
       },
     },
   },
