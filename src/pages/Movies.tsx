@@ -1,27 +1,22 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
-import { HeroSection } from "@/components/HeroSection";
 import { MovieGrid } from "@/components/MovieGrid";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { movies, getMoviesByGenre } from "@/data/movies";
 
-const Index = () => {
+const Movies = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const filteredMovies = getMoviesByGenre(activeCategory);
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <HeroSection />
-
-      {/* Movie Grid Section */}
-      <section className="container py-8">
+      <section className="container min-h-screen pb-12 pt-24">
         <div className="mb-8">
-          <h2 className="mb-2 font-display text-2xl font-bold text-foreground md:text-3xl">
-            Explore Movies
-          </h2>
+          <h1 className="mb-2 font-display text-3xl font-bold text-foreground md:text-4xl">
+            All Movies
+          </h1>
           <p className="text-muted-foreground">
-            Discover the latest and greatest movies across all genres
+            Browse our complete collection of movies
           </p>
         </div>
 
@@ -38,4 +33,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Movies;
