@@ -80,7 +80,6 @@ const ManageMovies = () => {
                   <th className="px-4 py-3 font-medium">Movie</th>
                   <th className="px-4 py-3 font-medium">Genre</th>
                   <th className="px-4 py-3 font-medium">Language</th>
-                  <th className="px-4 py-3 font-medium">Rating</th>
                   <th className="px-4 py-3 font-medium">Status</th>
                   <th className="px-4 py-3 font-medium text-right">Actions</th>
                 </tr>
@@ -119,7 +118,6 @@ const ManageMovies = () => {
                       </div>
                     </td>
                     <td className="px-4 py-4 text-muted-foreground">{movie.language}</td>
-                    <td className="px-4 py-4 font-medium text-primary">{movie.rating}</td>
                     <td className="px-4 py-4">
                       <span
                         className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${

@@ -92,8 +92,8 @@ const MovieDetail = () => {
               {/* Meta */}
               <div className="mb-6 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
-                  <Star className="h-5 w-5 fill-primary text-primary" />
-                  <span className="text-lg font-bold text-foreground">{movie.rating}</span>
+                  <Clock className="h-4 w-4" />
+                  <span>{movie.duration}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />

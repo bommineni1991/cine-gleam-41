@@ -8,7 +8,6 @@ export interface Movie {
   language: string;
   releaseYear: number;
   duration: string;
-  rating: number;
   isFeatured?: boolean;
   streamUrl?: string;
 }
@@ -30,6 +29,16 @@ export const categories: Category[] = [
   { id: "8", name: "Horror", slug: "horror" },
 ];
 
+export const languages = [
+  { code: "all", name: "All Languages" },
+  { code: "telugu", name: "Telugu" },
+  { code: "hindi", name: "Hindi" },
+  { code: "tamil", name: "Tamil" },
+  { code: "english", name: "English" },
+  { code: "kannada", name: "Kannada" },
+  { code: "malayalam", name: "Malayalam" },
+];
+
 export const movies: Movie[] = [
   {
     id: "1",
@@ -41,7 +50,6 @@ export const movies: Movie[] = [
     language: "Telugu",
     releaseYear: 2024,
     duration: "2h 35m",
-    rating: 8.5,
     isFeatured: true,
     streamUrl: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
   },
@@ -54,7 +62,6 @@ export const movies: Movie[] = [
     language: "Hindi",
     releaseYear: 2024,
     duration: "2h 15m",
-    rating: 7.8,
   },
   {
     id: "3",
@@ -66,7 +73,6 @@ export const movies: Movie[] = [
     language: "Telugu",
     releaseYear: 2024,
     duration: "2h 45m",
-    rating: 9.0,
     isFeatured: true,
     streamUrl: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
   },
@@ -79,7 +85,6 @@ export const movies: Movie[] = [
     language: "Tamil",
     releaseYear: 2023,
     duration: "1h 55m",
-    rating: 7.2,
   },
   {
     id: "5",
@@ -90,7 +95,6 @@ export const movies: Movie[] = [
     language: "Hindi",
     releaseYear: 2024,
     duration: "2h 20m",
-    rating: 8.1,
   },
   {
     id: "6",
@@ -101,7 +105,6 @@ export const movies: Movie[] = [
     language: "English",
     releaseYear: 2024,
     duration: "2h 50m",
-    rating: 8.7,
     isFeatured: true,
   },
   {
@@ -113,7 +116,6 @@ export const movies: Movie[] = [
     language: "Telugu",
     releaseYear: 2023,
     duration: "1h 45m",
-    rating: 7.5,
   },
   {
     id: "8",
@@ -124,7 +126,6 @@ export const movies: Movie[] = [
     language: "Hindi",
     releaseYear: 2024,
     duration: "2h 30m",
-    rating: 8.3,
   },
   {
     id: "9",
@@ -135,7 +136,6 @@ export const movies: Movie[] = [
     language: "Telugu",
     releaseYear: 2024,
     duration: "2h 25m",
-    rating: 8.0,
   },
   {
     id: "10",
@@ -146,7 +146,6 @@ export const movies: Movie[] = [
     language: "Tamil",
     releaseYear: 2023,
     duration: "2h 10m",
-    rating: 7.6,
   },
   {
     id: "11",
@@ -157,7 +156,6 @@ export const movies: Movie[] = [
     language: "Telugu",
     releaseYear: 2024,
     duration: "2h 40m",
-    rating: 8.4,
   },
   {
     id: "12",
@@ -168,7 +166,6 @@ export const movies: Movie[] = [
     language: "English",
     releaseYear: 2024,
     duration: "2h 15m",
-    rating: 7.9,
   },
 ];
 
@@ -180,6 +177,23 @@ export const getMoviesByGenre = (genre: string): Movie[] => {
   if (genre === "all") return movies;
   return movies.filter((movie) => 
     movie.genre.some((g) => g.toLowerCase() === genre.toLowerCase())
+  );
+};
+
+export const getMoviesByLanguage = (language: string): Movie[] => {
+  if (language === "all") return movies;
+  return movies.filter((movie) => 
+    movie.language.toLowerCase() === language.toLowerCase()
+  );
+};
+
+export const searchMovies = (query: string): Movie[] => {
+  const lowerQuery = query.toLowerCase();
+  return movies.filter((movie) =>
+    movie.title.toLowerCase().includes(lowerQuery) ||
+    movie.description.toLowerCase().includes(lowerQuery) ||
+    movie.language.toLowerCase().includes(lowerQuery) ||
+    movie.genre.some((g) => g.toLowerCase().includes(lowerQuery))
   );
 };
 

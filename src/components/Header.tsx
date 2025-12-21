@@ -1,12 +1,40 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Search, Menu, X, Film, User } from "lucide-react";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Search, Menu, X, User, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ibommaLogo from "@/assets/ibomma-logo.png";
+import ibommaName from "@/assets/ibomma-name.png";
 
-export const Header = () => {
+const languages = [
+  { code: "all", name: "All Languages" },
+  { code: "telugu", name: "Telugu" },
+  { code: "hindi", name: "Hindi" },
+  { code: "tamil", name: "Tamil" },
+  { code: "english", name: "English" },
+  { code: "kannada", name: "Kannada" },
+  { code: "malayalam", name: "Malayalam" },
+];
+
+interface HeaderProps {
+  isAdmin?: boolean;
+}
+
+export const Header = ({ isAdmin = false }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams] = useSearchParams();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const currentLanguage = searchParams.get("language") || "all";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,11 +48,30 @@ export const Header = () => {
     setIsMobileMenuOpen(false);
   }, [location]);
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/movies?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  const handleLanguageChange = (langCode: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (langCode === "all") {
+      params.delete("language");
+    } else {
+      params.set("language", langCode);
+    }
+    navigate(`${location.pathname}?${params.toString()}`);
+  };
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Movies", path: "/movies" },
     { name: "Categories", path: "/categories" },
   ];
+
+  const selectedLanguage = languages.find((l) => l.code === currentLanguage);
 
   return (
     <header
@@ -38,12 +85,18 @@ export const Header = () => {
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-gold shadow-glow">
-              <Film className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="font-display text-xl font-bold text-foreground md:text-2xl">
-              CineStream
-            </span>
+            <img
+              src={ibommaLogo}
+              alt="IBOMMA Logo"
+              className="h-10 w-10 object-contain"
+              style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
+            />
+            <img
+              src={ibommaName}
+              alt="IBOMMA"
+              className="h-6 object-contain md:h-8"
+              style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -65,15 +118,48 @@ export const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-3 md:flex">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button asChild variant="outline" size="sm">
-              <Link to="/admin">
-                <User className="h-4 w-4" />
-                Admin
-              </Link>
-            </Button>
+            {/* Search */}
+            <form onSubmit={handleSearch} className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search movies..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-48 pl-9 pr-3 lg:w-64"
+              />
+            </form>
+
+            {/* Language Filter */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Globe className="h-4 w-4" />
+                  {selectedLanguage?.name || "Language"}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {languages.map((lang) => (
+                  <DropdownMenuItem
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={currentLanguage === lang.code ? "bg-secondary" : ""}
+                  >
+                    {lang.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Admin Link - Only show if admin */}
+            {isAdmin && (
+              <Button asChild variant="outline" size="sm">
+                <Link to="/admin">
+                  <User className="h-4 w-4" />
+                  Admin
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,6 +177,20 @@ export const Header = () => {
         {isMobileMenuOpen && (
           <div className="animate-fade-in border-t border-border bg-background/95 backdrop-blur-lg md:hidden">
             <nav className="flex flex-col gap-2 py-4">
+              {/* Mobile Search */}
+              <form onSubmit={handleSearch} className="px-4 pb-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search movies..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-9"
+                  />
+                </div>
+              </form>
+
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
@@ -104,14 +204,39 @@ export const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <div className="mt-2 border-t border-border px-4 pt-4">
-                <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/admin">
-                    <User className="h-4 w-4" />
-                    Admin Panel
-                  </Link>
-                </Button>
+
+              {/* Mobile Language Filter */}
+              <div className="px-4 py-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="w-full gap-2">
+                      <Globe className="h-4 w-4" />
+                      {selectedLanguage?.name || "Language"}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {languages.map((lang) => (
+                      <DropdownMenuItem
+                        key={lang.code}
+                        onClick={() => handleLanguageChange(lang.code)}
+                      >
+                        {lang.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
+              {isAdmin && (
+                <div className="mt-2 border-t border-border px-4 pt-4">
+                  <Button asChild variant="outline" size="sm" className="w-full">
+                    <Link to="/admin">
+                      <User className="h-4 w-4" />
+                      Admin Panel
+                    </Link>
+                  </Button>
+                </div>
+              )}
             </nav>
           </div>
         )}
