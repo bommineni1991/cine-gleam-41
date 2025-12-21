@@ -120,7 +120,6 @@ const Dashboard = () => {
                       </span>
                     </td>
                     <td className="py-4 text-muted-foreground">{movie.language}</td>
-                    <td className="py-4 font-medium text-primary">{movie.rating}</td>
                     <td className="py-4 text-muted-foreground">{movie.releaseYear}</td>
                   </tr>
                 ))}

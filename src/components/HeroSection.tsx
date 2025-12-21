@@ -49,8 +49,8 @@ export const HeroSection = () => {
           {/* Meta Info */}
           <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-primary text-primary" />
-              <span className="font-semibold text-foreground">{currentMovie.rating}</span>
+              <Clock className="h-4 w-4" />
+              <span>{currentMovie.duration}</span>
             </div>
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4" />

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { Film, Github, Twitter, Instagram } from "lucide-react";
+import { Github, Twitter, Instagram } from "lucide-react";
+import ibommaLogo from "@/assets/ibomma-logo.png";
+import ibommaName from "@/assets/ibomma-name.png";
 
 export const Footer = () => {
   return (
@@ -9,15 +11,21 @@ export const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-gold">
-                <Film className="h-6 w-6 text-primary-foreground" />
-              </div>
-              <span className="font-display text-xl font-bold text-foreground">
-                CineStream
-              </span>
+              <img
+                src={ibommaLogo}
+                alt="IBOMMA Logo"
+                className="h-10 w-10 object-contain"
+                style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
+              />
+              <img
+                src={ibommaName}
+                alt="IBOMMA"
+                className="h-6 object-contain"
+                style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
+              />
             </Link>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              Your premier destination for streaming the latest and greatest movies.
+              Your destination for streaming Telugu, Hindi, and Tamil movies.
               Enjoy unlimited entertainment in stunning quality.
             </p>
             <div className="mt-4 flex gap-4">
@@ -60,26 +68,21 @@ export const Footer = () => {
             <h3 className="mb-4 font-display font-semibold text-foreground">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link to="/privacy-policy" className="text-muted-foreground transition-colors hover:text-primary">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
+                <Link to="/terms-of-service" className="text-muted-foreground transition-colors hover:text-primary">
                   Terms of Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                  DMCA
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} CineStream. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} IBOMMA. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Play, Star } from "lucide-react";
+import { Play } from "lucide-react";
 import type { Movie } from "@/data/movies";
 
 interface MovieCardProps {
@@ -31,12 +31,6 @@ export const MovieCard = ({ movie, index = 0 }: MovieCardProps) => {
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/90 shadow-glow transition-transform duration-300 group-hover:scale-110">
             <Play className="h-7 w-7 fill-primary-foreground text-primary-foreground" />
           </div>
-        </div>
-        
-        {/* Rating Badge */}
-        <div className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-background/80 px-2 py-1 backdrop-blur-sm">
-          <Star className="h-3 w-3 fill-primary text-primary" />
-          <span className="text-xs font-semibold text-foreground">{movie.rating}</span>
         </div>
         
         {/* Movie Info */}
