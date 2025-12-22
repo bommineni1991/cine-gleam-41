@@ -89,13 +89,11 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
               src={ibommaLogo}
               alt="IBOMMA Logo"
               className="h-10 w-10 object-contain"
-              style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
             />
             <img
               src={ibommaName}
               alt="IBOMMA"
               className="h-6 object-contain md:h-8"
-              style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
             />
           </Link>
 

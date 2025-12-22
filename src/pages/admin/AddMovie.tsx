@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, Film, Link as LinkIcon, Save } from "lucide-react";
+import { Film, Link as LinkIcon, Save, Plus, Trash2, Megaphone } from "lucide-react";
 import { AdminLayout } from "./AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { categories } from "@/data/movies";
+import { categories, type AdBreak } from "@/data/movies";
 
 const AddMovie = () => {
   const navigate = useNavigate();
@@ -24,7 +25,8 @@ const AddMovie = () => {
     language: "",
     releaseYear: new Date().getFullYear(),
     duration: "",
-    rating: 0,
+    isFeatured: false,
+    adBreaks: [] as AdBreak[],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -143,26 +145,20 @@ const AddMovie = () => {
                   required
                 />
               </div>
-              <div>
-                <Label htmlFor="rating">Rating (0-10)</Label>
-                <Input
-                  id="rating"
-                  type="number"
-                  step="0.1"
-                  min="0"
-                  max="10"
-                  placeholder="e.g., 8.5"
-                  value={formData.rating}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      rating: parseFloat(e.target.value),
-                    }))
-                  }
-                  className="mt-1.5"
-                  required
-                />
-              </div>
+            </div>
+
+            {/* Featured Toggle */}
+            <div className="mt-4 flex items-center space-x-2">
+              <Checkbox
+                id="isFeatured"
+                checked={formData.isFeatured}
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({ ...prev, isFeatured: checked === true }))
+                }
+              />
+              <Label htmlFor="isFeatured" className="cursor-pointer">
+                Feature this movie on the homepage
+              </Label>
             </div>
           </div>
 
@@ -237,6 +233,100 @@ const AddMovie = () => {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Ad Breaks Card */}
+          <div className="glass-card rounded-xl p-6">
+            <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold text-foreground">
+              <Megaphone className="h-5 w-5 text-primary" />
+              Ad Breaks (Mid-roll Ads)
+            </h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Add custom ads at specific timestamps during the movie playback.
+            </p>
+            
+            {formData.adBreaks.map((ad, index) => (
+              <div key={ad.id} className="mb-4 flex items-end gap-3 rounded-lg bg-secondary/50 p-4">
+                <div className="flex-1">
+                  <Label>Time (minutes)</Label>
+                  <Input
+                    type="number"
+                    min="0"
+                    placeholder="e.g., 20"
+                    value={ad.timestampMinutes}
+                    onChange={(e) => {
+                      const newAdBreaks = [...formData.adBreaks];
+                      newAdBreaks[index].timestampMinutes = parseInt(e.target.value) || 0;
+                      setFormData((prev) => ({ ...prev, adBreaks: newAdBreaks }));
+                    }}
+                    className="mt-1.5"
+                  />
+                </div>
+                <div className="flex-[2]">
+                  <Label>Ad Video/Image URL</Label>
+                  <Input
+                    placeholder="https://example.com/ad.mp4"
+                    value={ad.adUrl}
+                    onChange={(e) => {
+                      const newAdBreaks = [...formData.adBreaks];
+                      newAdBreaks[index].adUrl = e.target.value;
+                      setFormData((prev) => ({ ...prev, adBreaks: newAdBreaks }));
+                    }}
+                    className="mt-1.5"
+                  />
+                </div>
+                <div className="flex-1">
+                  <Label>Duration (sec)</Label>
+                  <Input
+                    type="number"
+                    min="5"
+                    placeholder="e.g., 30"
+                    value={ad.durationSeconds}
+                    onChange={(e) => {
+                      const newAdBreaks = [...formData.adBreaks];
+                      newAdBreaks[index].durationSeconds = parseInt(e.target.value) || 30;
+                      setFormData((prev) => ({ ...prev, adBreaks: newAdBreaks }));
+                    }}
+                    className="mt-1.5"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      adBreaks: prev.adBreaks.filter((_, i) => i !== index),
+                    }));
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setFormData((prev) => ({
+                  ...prev,
+                  adBreaks: [
+                    ...prev.adBreaks,
+                    {
+                      id: crypto.randomUUID(),
+                      timestampMinutes: 20,
+                      adUrl: "",
+                      durationSeconds: 30,
+                    },
+                  ],
+                }));
+              }}
+            >
+              <Plus className="h-4 w-4" />
+              Add Ad Break
+            </Button>
           </div>
 
           {/* Submit */}
