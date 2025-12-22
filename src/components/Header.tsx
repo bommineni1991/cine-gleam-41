@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ibommaLogo from "@/assets/ibomma-logo.png";
-import ibommaName from "@/assets/ibomma-name.png";
 
 const languages = [
   { code: "all", name: "All Languages" },
@@ -84,17 +83,15 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
       <div className="container">
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src={ibommaLogo}
               alt="IBOMMA Logo"
               className="h-12 w-auto object-contain md:h-14"
             />
-            <img
-              src={ibommaName}
-              alt="IBOMMA"
-              className="h-10 w-auto object-contain md:h-12"
-            />
+            <span className="font-display text-xl font-bold tracking-tight text-primary md:text-2xl">
+              I LOVE BOMMA
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
