@@ -84,16 +84,16 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
       <div className="container">
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-1">
             <img
               src={ibommaLogo}
               alt="IBOMMA Logo"
-              className="h-10 w-10 object-contain"
+              className="h-12 w-auto object-contain md:h-14"
             />
             <img
               src={ibommaName}
               alt="IBOMMA"
-              className="h-6 object-contain md:h-8"
+              className="h-10 w-auto object-contain md:h-12"
             />
           </Link>
 
