@@ -1,3 +1,10 @@
+export interface AdBreak {
+  id: string;
+  timestampMinutes: number; // e.g., 20, 70, 120
+  adUrl: string; // URL to ad video or image
+  durationSeconds: number; // How long the ad plays
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -10,6 +17,7 @@ export interface Movie {
   duration: string;
   isFeatured?: boolean;
   streamUrl?: string;
+  adBreaks?: AdBreak[];
 }
 
 export interface Category {

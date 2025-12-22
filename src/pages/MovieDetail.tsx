@@ -144,6 +144,7 @@ const MovieDetail = () => {
             src={movie.streamUrl}
             poster={movie.backdropUrl || movie.posterUrl}
             title={movie.title}
+            adBreaks={movie.adBreaks}
           />
         </section>
       )}
