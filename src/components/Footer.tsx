@@ -10,16 +10,16 @@ export const Footer = () => {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-1">
               <img
                 src={ibommaLogo}
                 alt="IBOMMA Logo"
-                className="h-10 w-10 object-contain"
+                className="h-14 w-auto object-contain"
               />
               <img
                 src={ibommaName}
                 alt="IBOMMA"
-                className="h-6 object-contain"
+                className="h-12 w-auto object-contain"
               />
             </Link>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
