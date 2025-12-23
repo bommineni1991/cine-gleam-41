@@ -90,7 +90,7 @@ export const Header = () => {
             <img
               src={ilovebommaLogo}
               alt="I Love Bomma"
-              className="h-10 w-auto object-contain md:h-12"
+              className="h-14 w-auto object-contain md:h-16"
             />
           </Link>
 
