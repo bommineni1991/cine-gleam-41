@@ -14,6 +14,9 @@ import Dashboard from "./pages/admin/Dashboard";
 import AddMovie from "./pages/admin/AddMovie";
 import EditMovie from "./pages/admin/EditMovie";
 import ManageMovies from "./pages/admin/ManageMovies";
+import AdminCategories from "./pages/admin/AdminCategories";
+import Analytics from "./pages/admin/Analytics";
+import Settings from "./pages/admin/Settings";
 import Login from "./pages/admin/Login";
 import NotFound from "./pages/NotFound";
 
@@ -78,6 +81,30 @@ const AppRoutes = () => (
       element={
         <ProtectedRoute>
           <ManageMovies />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/admin/categories"
+      element={
+        <ProtectedRoute>
+          <AdminCategories />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/admin/analytics"
+      element={
+        <ProtectedRoute>
+          <Analytics />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/admin/settings"
+      element={
+        <ProtectedRoute>
+          <Settings />
         </ProtectedRoute>
       }
     />

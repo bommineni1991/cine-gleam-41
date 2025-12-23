@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import ilovebommaLogo from "@/assets/ilovebomma-logo.png";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -30,7 +32,13 @@ const sidebarLinks = [
 export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -51,13 +59,12 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 items-center justify-between border-b border-border px-4">
-            <Link to="/admin" className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-gold">
-                <Film className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="font-display text-lg font-bold text-foreground">
-                Admin
-              </span>
+            <Link to="/" className="flex items-center gap-2">
+              <img
+                src={ilovebommaLogo}
+                alt="I Love Bomma"
+                className="h-8 w-auto object-contain"
+              />
             </Link>
             <Button
               variant="ghost"
@@ -98,10 +105,10 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             <Button
               variant="ghost"
               className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
-              onClick={() => navigate("/")}
+              onClick={handleLogout}
             >
               <LogOut className="h-5 w-5" />
-              Exit Admin
+              Logout
             </Button>
           </div>
         </div>
@@ -121,7 +128,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           </Button>
           <div className="ml-4 lg:ml-0">
             <h1 className="font-display text-lg font-semibold text-foreground">
-              CineStream Admin
+              I Love Bomma Admin
             </h1>
           </div>
         </header>

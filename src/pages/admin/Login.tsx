@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import ibommaLogo from "@/assets/ibomma-logo.png";
-import ibommaName from "@/assets/ibomma-name.png";
+import ilovebommaLogo from "@/assets/ilovebomma-logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -57,16 +56,9 @@ const Login = () => {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <img
-            src={ibommaLogo}
-            alt="IBOMMA Logo"
-            className="mb-4 h-16 w-16 object-contain"
-            style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
-          />
-          <img
-            src={ibommaName}
-            alt="IBOMMA"
-            className="h-8 object-contain"
-            style={{ filter: "brightness(0) saturate(100%) invert(83%) sepia(46%) saturate(1000%) hue-rotate(358deg) brightness(103%) contrast(103%)" }}
+            src={ilovebommaLogo}
+            alt="I Love Bomma"
+            className="mb-4 h-16 w-auto object-contain"
           />
           <p className="mt-2 text-muted-foreground">Admin Login</p>
         </div>
@@ -81,7 +73,7 @@ const Login = () => {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@ibomma.com"
+                  placeholder="admin@ilovebomma.com"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, email: e.target.value }))

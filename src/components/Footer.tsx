@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Twitter, Instagram } from "lucide-react";
-import ibommaLogo from "@/assets/ibomma-logo.png";
+import ilovebommaLogo from "@/assets/ilovebomma-logo.png";
 
 export const Footer = () => {
   return (
@@ -9,15 +9,12 @@ export const Footer = () => {
         <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center">
               <img
-                src={ibommaLogo}
-                alt="IBOMMA Logo"
-                className="h-14 w-auto object-contain"
+                src={ilovebommaLogo}
+                alt="I Love Bomma"
+                className="h-12 w-auto object-contain"
               />
-              <span className="font-display text-2xl font-bold tracking-tight text-primary">
-                I LOVE BOMMA
-              </span>
             </Link>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               Your destination for streaming Telugu, Hindi, and Tamil movies.
@@ -77,7 +74,7 @@ export const Footer = () => {
         </div>
 
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} IBOMMA. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} I Love Bomma. All rights reserved.</p>
         </div>
       </div>
     </footer>
