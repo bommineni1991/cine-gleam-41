@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { Search, Menu, X, User, Globe } from "lucide-react";
+import { Search, Menu, X, User, Globe, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,7 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ibommaLogo from "@/assets/ibomma-logo.png";
+import { useAuth } from "@/contexts/AuthContext";
+import ilovebommaLogo from "@/assets/ilovebomma-logo.png";
 
 const languages = [
   { code: "all", name: "All Languages" },
@@ -21,19 +22,21 @@ const languages = [
   { code: "malayalam", name: "Malayalam" },
 ];
 
-interface HeaderProps {
-  isAdmin?: boolean;
-}
-
-export const Header = ({ isAdmin = false }: HeaderProps) => {
+export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAdmin, logout } = useAuth();
 
   const currentLanguage = searchParams.get("language") || "all";
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,15 +86,12 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
       <div className="container">
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center">
             <img
-              src={ibommaLogo}
-              alt="IBOMMA Logo"
-              className="h-12 w-auto object-contain md:h-14"
+              src={ilovebommaLogo}
+              alt="I Love Bomma"
+              className="h-10 w-auto object-contain md:h-12"
             />
-            <span className="font-display text-xl font-bold tracking-tight text-primary md:text-2xl">
-              I LOVE BOMMA
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -148,12 +148,18 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
 
             {/* Admin Link - Only show if admin */}
             {isAdmin && (
-              <Button asChild variant="outline" size="sm">
-                <Link to="/admin">
-                  <User className="h-4 w-4" />
-                  Admin
-                </Link>
-              </Button>
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/admin">
+                    <User className="h-4 w-4" />
+                    Admin
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </Button>
+              </>
             )}
           </div>
 
@@ -223,12 +229,16 @@ export const Header = ({ isAdmin = false }: HeaderProps) => {
               </div>
 
               {isAdmin && (
-                <div className="mt-2 border-t border-border px-4 pt-4">
+                <div className="mt-2 space-y-2 border-t border-border px-4 pt-4">
                   <Button asChild variant="outline" size="sm" className="w-full">
                     <Link to="/admin">
                       <User className="h-4 w-4" />
                       Admin Panel
                     </Link>
+                  </Button>
+                  <Button variant="ghost" size="sm" className="w-full" onClick={handleLogout}>
+                    <LogOut className="h-4 w-4" />
+                    Logout
                   </Button>
                 </div>
               )}
